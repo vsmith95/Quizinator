@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizinator</title>
     <link rel="stylesheet" href="./assets/css/styles.css" />
-    <script src="script.js"></script>
 </head>
 <body>
     <header>
@@ -21,7 +20,7 @@
             </p>
         </div>
     </header>
-    <div class="container home">
+    <div id="home" class="container home">
         <h1>
             The Amazing Quizinator!
         </h1>
@@ -32,18 +31,29 @@
                 If the timer runs out, or all questions are answered, the quiz will end!
             </p>
         </div>
-        <button class="start-btn">Start!</button>
+        <button id="start-btn" class="start-btn" onclick="quizStart()">Start!</button>
     </div>
-    <section id="quiz-container" class="container">
+    <section id="quiz-container" class="container hide">
         <div id="quiz-box">
-            <div id="question">Question</div>
+            <div>
+                <h2 id="question">Question</h1>
+            </div>
             <div id="answer-buttons" class="btn-box">
-                <button class="btn">Answer 1</button>
-                <button class="btn">Answer 2</button>
-                <button class="btn">Answer 3</button>
-                <button class="btn">Answer 4</button>
+                <div class="answer-container">
+                    <p class="answer-text" data-number="1">Answer 1</p>
+                </div>
+                <div class="answer-container">
+                    <p class="answer-text" data-number="2">Answer 2</p>
+                </div>
+                <div class="answer-container">
+                    <p class="answer-text" data-number="3">Answer 3</p>
+                </div>
+                <div class="answer-container">
+                    <p class="answer-text" data-number="4">Answer 4</p>
+                </div>
             </div>   
         </div>
     </section>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
