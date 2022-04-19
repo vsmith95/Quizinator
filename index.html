@@ -12,7 +12,7 @@
     <header>
         <div id="highscore" class="score-link">
             <p>
-                View Highscore
+                <a href="#">View Highscore</a>
             </p>
         </div>
         <div id="timer" class="timer-box">
@@ -21,7 +21,20 @@
             </p>
         </div>
     </header>
-    <section class="container">
+    <div class="container home">
+        <h1>
+            The Amazing Quizinator!
+        </h1>
+        <div class="quiz-intro">
+            <p>
+                In this quiz you will be given multiple choice questions to test your knowledge of basic coding.
+                At the end of the quiz you will be given a score and will be able to save your highscore and initials.
+                If the timer runs out, or all questions are answered, the quiz will end!
+            </p>
+        </div>
+        <button class="start-btn">Start!</button>
+    </div>
+    <section id="quiz-container" class="container">
         <div id="quiz-box">
             <div id="question">Question</div>
             <div id="answer-buttons" class="btn-box">
@@ -31,6 +44,6 @@
                 <button class="btn">Answer 4</button>
             </div>   
         </div>
-    </div>
+    </section>
 </body>
 </html>
