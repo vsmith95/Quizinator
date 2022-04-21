@@ -20,6 +20,7 @@
             </p>
         </div>
     </header>
+    <!-- home page -->
     <div id="home" class="container home">
         <h1>
             The Amazing Quizinator!
@@ -33,6 +34,7 @@
         </div>
         <button id="start-btn" class="start-btn" onclick="quizStart()">Start!</button>
     </div>
+    <!-- quiz window -->
     <section id="quiz-container" class="container hide">
         <div id="quiz-box">
             <div>
@@ -51,7 +53,21 @@
                 <div class="answer-container">
                     <p class="answer-text" data-number="4">Answer 4</p>
                 </div>
-            </div>   
+            </div>  
+            <div id="feedback" class="feedback">
+                <p></p>
+            </div> 
+        </div>
+    </section>
+    <!-- highscore logging -->
+    <section id="highscore-logger" class="container home hide">
+        <div>
+            <h2>Your Highscore is...</h2>
+            <h2 id="final-score"></h2>
+            <form>
+                <input type="text" name="initials" id="initials" placeholder="initials"/>
+                <button type="submit" class="btn" id="logScore" onclick="saveScore(event)">Save!</button>
+            </form>
         </div>
     </section>
     <script src="/assets/js/script.js"></script>

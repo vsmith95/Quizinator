@@ -1,10 +1,12 @@
 const question = document.getElementById("question");
 const answers = Array.from(document.getElementsByClassName("answer-text"));
-const startButton = document.getElementById("start-btn")
-console.log(answers);
+const startButton = document.getElementById("start-btn");
+const timer = document.getElementById("timer");
+const startingTime = 60;
 
 let currentQuestion = {};
 let score = 0;
+console.log(score)
 let questionCounter = 0;
 let usableQuestions = [];
 let acceptAnswers = false;
@@ -66,16 +68,30 @@ quizStart = () => {
     questionCounter = 0;
     score = 0;
     usableQuestions = [...questions];
-    console.log(usableQuestions);
+
+
+		// setInterval( countdown(),{
+		// 	startingTime--,
+
+		// 	if(startingTime >= 0 ){
+		// 		timer.innerHTML = "<p>startingTime</p>";
+		// 	}
+
+		// 	if( startingTime === 0 ){
+		// 		timer.innerHTML = "COMPLETE";
+		// 	}
+		// }, 1000);
+	
+
     getNextQuestion();
 };
 
-getNextQuestion = () => {
 
+getNextQuestion = () => {
     if(usableQuestions.length === 0 || questionCounter > TOTAL_QUESTIONS) {
         // Show Highscore section
-        var quizContainer = document.getElementById("quiz-container");
-        quizContainer.classList.toggle("hide");
+        getHighscore();
+
     };
     questionCounter++;
     const questionIndex = Math.floor(Math.random() * usableQuestions.length);
@@ -89,19 +105,60 @@ getNextQuestion = () => {
     });
 
     usableQuestions.splice(questionIndex, 1);
-    console.log(usableQuestions);
     acceptAnswers = true;
-}
+};
 
 answers.forEach( answer => {
     answer.addEventListener('click', e => {
-        if(!acceptAnswers) return;
+        if (!acceptAnswers) return;
 
         acceptAnswers = false;
         const chosenAnswer = e.target;
         const chosenCorrect = chosenAnswer.dataset["number"];
-        console.log(chosenAnswer);
+        console.log(chosenCorrect == currentQuestion.correct);
+
+        if (chosenCorrect == currentQuestion.correct || usableQuestions > 0) {
+            score = QUESTION_POINTS + score;
+            console.log(score)
+            document.getElementById("feedback").innerHTML = "<p class='correct-answer'>PREVIOUS ANSWER WAS CORRECT!</p>";
+        }
+        else {
+            document.getElementById("feedback").innerHTML = "<p class='incorrect-answer'>PREVIOUS ANSWER WAS INCORRECT!</p>";
+        };
+
         getNextQuestion();
 
     });
 });
+
+getHighscore = () => {
+
+    var quizContainer = document.getElementById("quiz-container");
+    quizContainer.classList.toggle("hide");
+
+    var highscorePage = document.getElementById("highscore-logger")
+    highscorePage.classList.toggle("hide")
+
+    document.getElementById("final-score").innerText = score;
+
+};
+
+const initials = document.getElementById("initials");
+const logScore = document.getElementById("logScore");
+
+saveScore = e => {
+    e.preventDefault();
+
+   const scoreSubmission = {
+       score: score,
+       name: initials.value,
+
+   } ;
+   JSON.stringify(scoreSubmission);
+
+   const scoreLog = JSON.stringify(scoreSubmission);
+
+   console.log(scoreSubmission);
+   localStorage.setItem(scoreSubmission);
+   scoreLog.push(scoreSubmission)
+};
