@@ -15,9 +15,7 @@
             </p>
         </div>
         <div id="timer" class="timer-box">
-            <p>
-                Timer
-            </p>
+            
         </div>
     </header>
     <!-- home page -->
@@ -32,6 +30,8 @@
                 If the timer runs out, or all questions are answered, the quiz will end!
             </p>
         </div>
+
+        <!-- removed updateTimer() from onclick as it isn't functional -->
         <button id="start-btn" class="start-btn" onclick="quizStart()">Start!</button>
     </div>
     <!-- quiz window -->
@@ -68,6 +68,9 @@
                 <input type="text" name="initials" id="initials" placeholder="initials"/>
                 <button type="submit" class="btn" id="logScore" onclick="saveScore(event)">Save!</button>
             </form>
+        </div>
+        <div id="leaderboard" class="home">
+            
         </div>
     </section>
     <script src="/assets/js/script.js"></script>

@@ -2,11 +2,10 @@ const question = document.getElementById("question");
 const answers = Array.from(document.getElementsByClassName("answer-text"));
 const startButton = document.getElementById("start-btn");
 const timer = document.getElementById("timer");
-const startingTime = 60;
+const startingTime = 75;
 
 let currentQuestion = {};
 let score = 0;
-console.log(score)
 let questionCounter = 0;
 let usableQuestions = [];
 let acceptAnswers = false;
@@ -69,30 +68,20 @@ quizStart = () => {
     score = 0;
     usableQuestions = [...questions];
 
-
-		// setInterval( countdown(),{
-		// 	startingTime--,
-
-		// 	if(startingTime >= 0 ){
-		// 		timer.innerHTML = "<p>startingTime</p>";
-		// 	}
-
-		// 	if( startingTime === 0 ){
-		// 		timer.innerHTML = "COMPLETE";
-		// 	}
-		// }, 1000);
-	
-
     getNextQuestion();
 };
 
+// updateTimer = () => {
+//     const remainingTime = Math.floor(startingTime - 1);
+//     let seconds = startingTime % 60;
+    
+//     timer.innerHTML = remainingTime;
+//     remainingTime--
+// };
+// setInterval(updateTimer, 1000);
 
 getNextQuestion = () => {
-    if(usableQuestions.length === 0 || questionCounter > TOTAL_QUESTIONS) {
-        // Show Highscore section
-        getHighscore();
-
-    };
+    
     questionCounter++;
     const questionIndex = Math.floor(Math.random() * usableQuestions.length);
     currentQuestion = usableQuestions[questionIndex];
@@ -115,19 +104,21 @@ answers.forEach( answer => {
         acceptAnswers = false;
         const chosenAnswer = e.target;
         const chosenCorrect = chosenAnswer.dataset["number"];
-        console.log(chosenCorrect == currentQuestion.correct);
 
         if (chosenCorrect == currentQuestion.correct || usableQuestions > 0) {
             score = QUESTION_POINTS + score;
-            console.log(score)
             document.getElementById("feedback").innerHTML = "<p class='correct-answer'>PREVIOUS ANSWER WAS CORRECT!</p>";
         }
         else {
             document.getElementById("feedback").innerHTML = "<p class='incorrect-answer'>PREVIOUS ANSWER WAS INCORRECT!</p>";
         };
 
+        if (usableQuestions.length > 0 || questionCounter > TOTAL_QUESTIONS) {
         getNextQuestion();
-
+        }
+        else {
+            getHighscore();
+        };
     });
 });
 
@@ -145,20 +136,28 @@ getHighscore = () => {
 
 const initials = document.getElementById("initials");
 const logScore = document.getElementById("logScore");
+const scoreSubmission = JSON.parse(localStorage.getItem("scoreSubmission")) || [];
 
 saveScore = e => {
     e.preventDefault();
 
-   const scoreSubmission = {
+   const scoreInitials = 
+   {
        score: score,
        name: initials.value,
 
    } ;
-   JSON.stringify(scoreSubmission);
+   scoreSubmission.push(scoreInitials)
 
-   const scoreLog = JSON.stringify(scoreSubmission);
+   scoreSubmission.sort( (a,b) => b.score - a.score);
 
-   console.log(scoreSubmission);
-   localStorage.setItem(scoreSubmission);
-   scoreLog.push(scoreSubmission)
+   localStorage.setItem("scoreSubmission", JSON.stringify(scoreSubmission))
 };
+
+const leaderboard = document.getElementById("leaderboard");
+
+leaderboard.innerHTML = scoreSubmission
+.map(scoreInitials => {
+    return "${scoreInitials.name} - ${scoreInitials.score};"
+})
+.join;
